@@ -19,8 +19,7 @@ export class OfflineEventsService {
 
   addToStack(event: OEvent): void {
     // @ts-ignore
-    let events: OEvent[] =
-      JSON.parse(localStorage.getItem('offlineEvents')) || [];
+    let events: OEvent[] = JSON.parse(localStorage.getItem('offlineEvents')) || [];
     events.push(event);
     localStorage.setItem('offlineEvents', JSON.stringify(events));
   }

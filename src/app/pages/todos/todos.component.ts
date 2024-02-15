@@ -72,8 +72,7 @@ export class TodosComponent {
       switch (item.type) {
         case 'delete':
           // @ts-ignore
-          this.todoService
-            .deleteTodoItem(item.params.username, item.params?.todoName)
+          this.todoService.deleteTodoItem(item.params.username, item.params?.todoName)
             .subscribe((data) => {
               console.log(
                 'deleted an item for user ',
@@ -86,8 +85,7 @@ export class TodosComponent {
           break;
         case 'post':
           // @ts-ignore
-          this.todoService
-            .addTodoItemToUsername(item.params?.username, {
+          this.todoService.addTodoItemToUsername(item.params?.username, {
               name: item.params?.todoName,
               status: item.params?.status,
             })
@@ -103,9 +101,7 @@ export class TodosComponent {
           break;
         case 'patch':
           // @ts-ignore
-          this.todoService
-            .updateTodoStatByUsername(
-              item.params?.username,
+          this.todoService.updateTodoStatByUsername(item.params?.username,
               item.params?.todoName,
               item.params?.status,
             )
