@@ -1,0 +1,46 @@
+<div class="links">
+  <button (click)="goBack()">< Back to Search</button>
+  <button (click)="this.showAddBlock = !this.showAddBlock">
+    Add Todo Item
+  </button>
+</div>
+<div class="addBlock" *ngIf="showAddBlock">
+  <app-input-text [searchText]="'Add a TODO item'" [errors]="errors">
+    <input
+      type="text"
+      [(ngModel)]="newtodo"
+      (keydown)="addTodoItemEnter($event)"
+    />
+  </app-input-text>
+  <button (click)="addTodoItem()">Add</button>
+</div>
+<h3>
+  Todo List for user "<span>{{ username }}</span
+  >"
+</h3>
+<div class="list">
+  <table>
+    <thead>
+      <tr>
+        <th>&nbsp;</th>
+        <th>Todo item Name</th>
+        <th>Status</th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let todoItem of todos">
+        <td>
+          <input
+            type="checkbox"
+            [checked]="todoItem.status === '1'"
+            (change)="changeStatus(todoItem)"
+          />
+        </td>
+        <td>{{ todoItem.name }}</td>
+        <td>{{ todoItem.status === "1" ? "Done" : "In_progress" }}</td>
+        <td><a title="Delete" (click)="deleteTodoItem(todoItem)">X</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

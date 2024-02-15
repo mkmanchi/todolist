@@ -1,0 +1,21 @@
+.input-block {
+  display: flex;
+  flex-direction: row;
+}
+label {
+  margin-right: 10px;
+  margin-top: 10px;
+  flex: 40%;
+}
+.input-wrapper {
+  flex: 60%;
+}
+@media (max-width: 800px) {
+  .input-block {
+    flex-direction: column;
+  }
+  label {
+    margin-bottom: 20px;
+    display: block;
+  }
+}

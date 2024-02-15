@@ -1,0 +1,77 @@
+h3 {
+  text-align: center;
+}
+h3 span {
+  color: cadetblue;
+}
+.list {
+  margin-top: 20px;
+}
+.list > table {
+  border: 1px solid #ccc;
+  width: 70%;
+  margin: auto;
+}
+.list > table th,
+.list > table td {
+  text-align: left;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+.list > table th:nth-child(1),
+.list > table td:nth-child(1) {
+  border-right: 0;
+}
+.list > table th:nth-child(2),
+.list > table td:nth-child(2) {
+  border-left: 0;
+}
+.list td a {
+  font-size: 42px;
+  cursor: pointer;
+  color: cadetblue;
+  line-height: 40px;
+}
+.list td a:hover {
+  text-decoration: underline;
+}
+
+.addBlock {
+  display: flex;
+  width: 500px;
+  border: 1px solid #ccc;
+  margin: 20px auto;
+  padding: 20px;
+}
+app-input-text {
+  flex: 80%;
+}
+.addBlock button {
+  flex: 20%;
+}
+input[type="text"] {
+  padding: 10px 20px;
+  width: 80%;
+}
+.links {
+  width: 70%;
+  margin: 20px auto;
+}
+button {
+  background: cadetblue;
+  border: 0;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+}
+.links button {
+  padding: 10px;
+}
+.links button:nth-child(1) {
+  background: none;
+  border: 0;
+  color: #000;
+}
+.links button:nth-child(2) {
+  float: right;
+}

@@ -1,0 +1,74 @@
+#search {
+  display: flex;
+  flex-direction: row;
+  width: 75%;
+  border: 1px solid #ccc;
+  background: #fff;
+  padding: 40px;
+  margin: 50px auto auto;
+  -webkit-box-shadow: 0 4px 6px -6px #222;
+  -moz-box-shadow: 0 4px 6px -6px #222;
+  box-shadow: 0 4px 6px -6px #222;
+}
+
+app-input-text {
+  margin-right: 20px;
+  flex: 80%;
+}
+button {
+  flex: 20%;
+  padding: 10px 20px;
+  background: cadetblue;
+  border-radius: 10px;
+  border: 0;
+  -webkit-box-shadow: 0 4px 6px -6px #222;
+  -moz-box-shadow: 0 4px 6px -6px #222;
+  box-shadow: 0 4px 6px -6px #222;
+  color: #fff;
+}
+input[type="text"] {
+  padding: 10px 20px;
+  width: 80%;
+}
+
+.list {
+  margin-top: 20px;
+}
+.list > table {
+  border: 1px solid #ccc;
+  width: 50%;
+  margin: auto;
+}
+.list > table th,
+.list > table td {
+  text-align: left;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+.list > table th:nth-child(1),
+.list > table td:nth-child(1) {
+  border-right: 0;
+}
+.list > table th:nth-child(2),
+.list > table td:nth-child(2) {
+  border-left: 0;
+}
+.list td a {
+  font-size: 42px;
+  cursor: pointer;
+  color: cadetblue;
+  line-height: 40px;
+}
+.list td a:hover {
+  text-decoration: underline;
+}
+@media (max-width: 800px) {
+  #search {
+    flex-direction: column;
+  }
+  app-input-text,
+  input[type="text"] {
+    margin-bottom: 20px;
+    width: 95%;
+  }
+}

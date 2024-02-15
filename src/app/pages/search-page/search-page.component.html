@@ -1,0 +1,26 @@
+<div id="search">
+  <app-input-text [searchText]="searchText" [errors]="errors">
+    <input
+      type="text"
+      placeholder="Start typing..."
+      [(ngModel)]="username"
+      (ngModelChange)="getUserInfo($event)"
+    />
+  </app-input-text>
+</div>
+<div class="list" *ngIf="todosListLengthStat">
+  <table>
+    <thead>
+      <tr>
+        <th>Usernames</th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of todosList">
+        <td>{{ item.username }}</td>
+        <td><a (click)="goToNextPage(item.username)">&raquo;</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

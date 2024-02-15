@@ -1,0 +1,16 @@
+<div class="input-block" [class.error]="error || errorsArray.length">
+  <label>{{ searchText }}: </label>
+  <div class="input-wrapper">
+    <ng-content></ng-content>
+  </div>
+  <div *ngIf="error" class="error-message">
+    <span>{{ error }}</span>
+  </div>
+  <div
+    [hidden]="!errorsArray.length"
+    class="error-message"
+    *ngFor="let error of errorsArray"
+  >
+    <span>{{ error }}</span>
+  </div>
+</div>
