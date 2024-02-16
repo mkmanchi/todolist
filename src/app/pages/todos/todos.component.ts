@@ -10,11 +10,13 @@ import {
   OfflineEventsService,
   OEvent,
 } from '../../services/offline-events.service';
+import {NotificationService} from "../../services/notification.service";
+import {NotificationComponent} from "../../components/notification/notification.component";
 
 @Component({
   selector: 'app-todos',
   standalone: true,
-  imports: [NgForOf, NgIf, FormsModule, InputTextComponent],
+  imports: [NgForOf, NgIf, FormsModule, InputTextComponent, NotificationComponent],
   templateUrl: './todos.component.html',
   styleUrl: './todos.component.css',
 })
@@ -31,16 +33,21 @@ export class TodosComponent {
     private router: Router,
     private todoService: TodosService,
     private offlineEventsService: OfflineEventsService,
+    private notifyService: NotificationService
   ) {}
 
   ngOnInit() {
     this.checkNetworkStatus();
     this.username = this.route.snapshot.params['id'];
     let storedTodolist = localStorage.getItem('todolist');
-    if (storedTodolist)
+    if (storedTodolist){
       this.todos = JSON.parse(storedTodolist).find(
         (item: TODOList) => item.username.toLowerCase() === this.username,
       )?.todos;
+    }
+    else{
+      this.goBack();
+    }
   }
   checkNetworkStatus() {
     this.networkStatus = navigator.onLine;
@@ -52,9 +59,12 @@ export class TodosComponent {
       .pipe(map(() => navigator.onLine))
       .subscribe((status) => {
         this.networkStatus = status;
-        if (status) {
+        if(status){
           this.saveStoredData();
+          this.notifyService.success("Network status: Online");
         }
+        else
+          this.notifyService.error('Network status: Offline');
       });
   }
   saveStoredData() {
@@ -63,9 +73,8 @@ export class TodosComponent {
     this.triggerOfflineEvents(offlineEvents);
   }
   triggerOfflineEvents(offlineEvents: OEvent[]) {
-    console.log(offlineEvents);
     if (offlineEvents.length === 0) {
-      console.log('No pending events to execute');
+      this.notifyService.error('No pending events to execute');
       return;
     }
     offlineEvents.map((item: OEvent) => {
@@ -74,11 +83,9 @@ export class TodosComponent {
           // @ts-ignore
           this.todoService.deleteTodoItem(item.params.username, item.params?.todoName)
             .subscribe((data) => {
-              console.log(
-                'deleted an item for user ',
-                item.params?.username,
-                '- todo: ',
-                item.params?.todoName,
+              this.notifyService.success(
+                'deleted an item for user '+
+                item.params?.username + '- todo: ' + item.params?.todoName
               );
               this.offlineEventsService.deleteStack(item);
             });
@@ -90,11 +97,11 @@ export class TodosComponent {
               status: item.params?.status,
             })
             .subscribe((data) => {
-              console.log(
-                'added an item for user ',
-                item.params?.username,
-                '- todo: ',
-                item.params?.todoName,
+              this.notifyService.success(
+                'added an item for user '+
+                item.params?.username+
+                '- todo: '+
+                item.params?.todoName
               );
               this.offlineEventsService.deleteStack(item);
             });
@@ -106,13 +113,13 @@ export class TodosComponent {
               item.params?.status,
             )
             .subscribe((data) => {
-              console.log(
-                'patched an item for user ',
-                item.params?.username,
-                '- todo: ',
-                item.params?.todoName,
-                ' wth status: ',
-                item.params?.status,
+              this.notifyService.success(
+                'patched an item for user '+
+                item.params?.username+
+                '- todo: '+
+                item.params?.todoName+
+                ' wth status: '+
+                item.params?.status
               );
               this.offlineEventsService.deleteStack(item);
             });
@@ -120,6 +127,7 @@ export class TodosComponent {
     });
   }
   goBack() {
+    localStorage.removeItem('todolist');
     this.router.navigate(['/search']);
   }
   addTodoItemEnter(ev: KeyboardEvent) {
