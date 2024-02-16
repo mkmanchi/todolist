@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {INotification, NotificationType} from "../interfaces/notification.interface";
-import {BehaviorSubject, Subject} from "rxjs";
+import {BehaviorSubject, Observable, Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +9,8 @@ export class NotificationService {
 
   constructor() { }
 
-  // @ts-ignore
-  private _notification$: BehaviorSubject<INotification> = new BehaviorSubject(null);
+
+  private _notification$: Subject<INotification> = new Subject();
 
   success(message: string, duration: number=3000) {
     this.notify(message, NotificationType.Success, duration);
@@ -21,7 +21,7 @@ export class NotificationService {
   error(message: string, duration: number = 3000) {
     this.notify(message, NotificationType.Error, duration);
   }
-  private notify(message: string, type: NotificationType,       duration: number) {
+  private notify(message: string, type: NotificationType, duration: number) {
     duration = !duration ? 3000 : duration;
     this._notification$.next({
       message: message,
@@ -29,7 +29,7 @@ export class NotificationService {
       duration: duration
     } as INotification);
   }
-  get notification() {
+  get notification(){
     return this._notification$.asObservable();
   }
 }

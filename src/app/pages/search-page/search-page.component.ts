@@ -22,12 +22,12 @@ export class SearchPageComponent implements OnInit, OnDestroy {
 
   todosList: TODOList[] = [];
 
-  private searchSubject = new Subject<string>();
+  searchSubject = new Subject<string>();
   private readonly debounceTimeMs = 500;
 
   constructor(
     private todoService: TodosService,
-    private router: Router,
+    public router: Router,
   ) {}
   get todosListLengthStat() {
     return this.todosList.length > 0;

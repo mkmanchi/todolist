@@ -40,10 +40,17 @@ export class TodosComponent {
     this.checkNetworkStatus();
     this.username = this.route.snapshot.params['id'];
     let storedTodolist = localStorage.getItem('todolist');
+    // console.log('ll', storedTodolist, this.username);
     if (storedTodolist){
-      this.todos = JSON.parse(storedTodolist).find(
-        (item: TODOList) => item.username.toLowerCase() === this.username,
+      let storedJsonObj = JSON.parse(storedTodolist);
+      // console.log('mm', storedJsonObj);
+      this.todos = storedJsonObj.find(
+        (item: TODOList) => {
+          // console.log(item.username.toLowerCase(), this.username);
+          return item.username.toLowerCase() === this.username
+        },
       )?.todos;
+      // console.log('pp', this.todos);
     }
     else{
       this.goBack();
@@ -70,7 +77,8 @@ export class TodosComponent {
   saveStoredData() {
     console.log('saving');
     let offlineEvents: OEvent[] = this.offlineEventsService.getStack();
-    this.triggerOfflineEvents(offlineEvents);
+    if(offlineEvents !== undefined)
+      this.triggerOfflineEvents(offlineEvents);
   }
   triggerOfflineEvents(offlineEvents: OEvent[]) {
     if (offlineEvents.length === 0) {
